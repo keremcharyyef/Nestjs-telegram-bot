@@ -22,7 +22,7 @@ const session = new LocalSession({database: 'session_db.json'})
    port: 5432,
    username: 'macbook',
    password: 'password',
-   database: 'telegram-bot',
+   database: 'back',
    entities: [join(__dirname, '**', '*entity.{ts,js')],
    migrations: [join(__dirname, '**', '*migrations.{ts,js')],
    synchronize: true,
