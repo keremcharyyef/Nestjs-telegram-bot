@@ -26,7 +26,6 @@ export class AppController {
   async createTask(ctx: Context) {
     ctx.session.type = 'create' 
     await ctx.reply('Ishi yazyn: ')
-    
   }
 
   @Hears('✅Gutarmak')
@@ -37,7 +36,6 @@ export class AppController {
   
   @Hears('🖋Uytgetmek')
   async editTask (ctx: Context) {
-
     await ctx.replyWithHTML( 'Isin ID-syny we taze adyny yazayyn: \n\n' + 
       ' Formaty - <b>1 | Taze ady</b>')
     ctx.session.type = 'edit'
@@ -54,36 +52,27 @@ export class AppController {
   async getMessage (@Message('text') message: string, @Ctx () ctx: Context){
        if(!ctx.session.type) return 
        if(ctx.session.type === 'create'){
-
         const todos = await this.appService.createTask(message) 
-
         await ctx.reply(showList(todos))
     }
-
     if (ctx.session.type === 'done') {
-
    const todos = await this.appService.doneTask(Number(message))
-
         if(!todos) {
           await ctx.deleteMessage()
           await ctx.reply('Bular yaly ID is tapylmady!')
           return
         }
-
-
         await ctx.reply(showList(todos))
     }
 
     if (ctx.session.type === 'edit') {
       const [taskId, taskName] = message.split(' | ')
       const todos = this.appService.editTask(Number(taskId), taskName)
-
       if(!todos) {
         await ctx.deleteMessage()
         await ctx.reply('Bular yaly ID is tapylmady!')
         return
       }
-      
       await ctx.reply(showList(todos))
     }
   }
